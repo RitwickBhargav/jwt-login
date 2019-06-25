@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Simple Role-Based Login System",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Simple",
+    "Role-Based",
+    "Authentication",
+    "System"
+  ],
+  "author": "Ritwick Bhargav",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "epress": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.1",
+    "mongoose-unique-validator": "^2.0.3",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0"
+  }
+}
