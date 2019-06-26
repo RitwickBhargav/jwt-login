@@ -5,18 +5,19 @@ const cors = require('cors');
 const passport = require('passport');
 const path = require('path');
 
+//Bring in the database object
+const config = require('./config/database');
+
 //Mongodb Config
 mongoose.set('useCreateIndex', true);
 
-//Bring in the database object
-const config = require('./config/database');
 //Connect with the database
-mongoose.connect(config.database, {useNewUrlParser: true})
-.then(() => {
-    console.log('Database Connected');
-}).catch(err => {
-    console.log(err);
-});
+mongoose.connect(config.database, { useNewUrlParser: true })
+    .then(() => {
+        console.log('Database Connected');
+    }).catch(err => {
+        console.log(err);
+    });
 
 //initialize the app
 const app = express();

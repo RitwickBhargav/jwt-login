@@ -14,58 +14,58 @@ router.post('/register', (req, res) => {
         password: req.body.password
     });
     User.addUser(newUser, (err, user) => {
-        if(err){
+        if (err) {
+            console.log(err)
             let message = "";
-            if(err.errors.username) message = "Username is already taken. "
-            if(err.errors.email) message += "Email already exists. "
-            return res.json({
-                success: false,
-                message
-            });
-        } else {
-            return res.json({
-                success: true,
-                message: "User registration is Successful."
-            });
+            if (err.errors.username) message = "Username is already taken. ";
+            if (err.errors.email) message += "Email already exists. ";
+            return res.json(err);
         }
+        return res.json({
+            success: true,
+            message: "User registration is Successful."
+        });
+
     });
 });
 
 router.post('/login', (req, res) => {
-    const username = "Ritwick_Bhargav";
+    const username = req.body.username;
     const password = req.body.password;
-    User.getUserByUsername(username, (err,user) => {
-        if(err) throw err;
-        if(!user) {
+    User.getUserByUsername(username, (err, user) => {
+        if (err) throw err;
+        if (!user) {
             return res.json({
-                success : false,
-                message : "User not found"
+                success: false,
+                message: "User not found"
             });
         }
         User.comparePassword(password, user.password, (err, isMatch) => {
-            if(err) throw err;
-            if(isMatch) {
+            if (err) throw err;
+            if (isMatch) {
+                debugger
                 const token = jwt.sign({
-                    type : "user",
-                    data : {
-                        _id : user._id,
-                        username : user.username,
-                        name : user.name,
-                        contact : user.contact
+                    type: "user",
+                    data: {
+                        _id: user._id,
+                        username: user.username,
+                        name: user.name,
+                        email: user.email,
+                        contact: user.contact
                     }
                 }, config.secret, {
                         expiresIn: 604880 //for 1 week time in ms
-                    }
+                    },
+                    { algorithm: 'RS256'}
                 );
                 return res.json({
-                    success : true,
-                    token : "JWT " + token
+                    success: true,
+                    token: "JWT " + token
                 });
-            } else
-            {
+            } else {
                 return res.json({
-                    success : true,
-                    message : "Wrong Password" 
+                    success: false,
+                    message: "Wrong Password"
                 });
             }
         });

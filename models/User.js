@@ -4,27 +4,27 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 //User Schema
 const UserSchema = mongoose.Schema({
-    name:{
-        type:String,
+    name: {
+        type: String,
         required: true
     },
-    email:{
+    email: {
         type: String,
         unique: true,
         index: true,
         required: true
     },
-    username:{
-        type:String,
+    username: {
+        type: String,
         unique: true,
         required: true
     },
-    password:{
-        type:String,
+    password: {
+        type: String,
         required: true
     },
-    contact:{
-        type:String,
+    contact: {
+        type: String,
         required: true
     }
 });
@@ -34,23 +34,23 @@ UserSchema.plugin(uniqueValidator);
 const User = module.exports = mongoose.model('User', UserSchema);
 
 //Find by Id
-module.exports.getUserById = function(id, callback){
+module.exports.getUserById = function (id, callback) {
     User.findById(id, callback);
 }
 
 //Find the user by its username
-module.exports.getUserByUsername = function(username, callback){
+module.exports.getUserByUsername = function (username, callback) {
     const query = {
-        username : username
+        username: username
     }
     User.findOne(query, callback);
-}
+};
 
 //to register the user
-module.exports.addUser = function(newUser, callback){
+module.exports.addUser = function (newUser, callback) {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if(err) return err;
+            if (err) return err;
             newUser.password = hash;
             newUser.save(callback);
         });
@@ -58,7 +58,7 @@ module.exports.addUser = function(newUser, callback){
 }
 
 //Compare Password
-module.exports.comparePassword = function(password, hash, callback) {
+module.exports.comparePassword = function (password, hash, callback) {
     bcrypt.compare(password, hash, (err, isMatch) => {
         if (err) throw err;
         callback(null, isMatch);
