@@ -15,12 +15,39 @@ router.post('/register', (req, res) => {
     });
     User.addUser(newUser, (err, user) => {
         if (err) {
-            console.log(err)
+            //debugger
+            //console.log(err)
             let message = "";
-            if (err.errors.username) message = "Username is already taken. ";
-            if (err.errors.email) message += "Email already exists. ";
-            return res.json(err);
+            let message1 = "";
+            let message2 = "";
+            if(err.errors.name != undefined)
+                if(err.errors.name.kind == "required" || err.errors.username.kind == "required"||err.errors.email.kind == "required" ||err.errors.password.kind == "required" ||err.errors.contact.kind == "required") message = "All entries are Mandatory. ";
+            if(err.errors.username != undefined)
+                if (err.errors.username.kind == "unique") message1 = "Username is already taken. ";
+            if(err.errors.email != undefined)
+                if (err.errors.email.kind == "unique") message2 = "Email already exists. ";
+            if(err.errors.email != undefined)
+                if (err.errors.email.kind == "unique") message2 = "Email already exists. ";
+            //return res.json(err);
+            return res.json({
+                success: false,
+                error: "User validation failed!",
+                entrynull : message,
+                uname : message1,
+                email : message2
+            });
         }
+        if(newUser.contact.length != 10 )
+            return res.json({
+                success: false,
+                message: "Phone No. is wrong"
+            });
+            debugger
+        if(req.body.password.length < 8 )
+        return res.json({
+            success: false,
+            message: "Password should be of at least 8 characters"
+        });
         return res.json({
             success: true,
             message: "User registration is Successful."
