@@ -44,9 +44,22 @@ app.get('/', (req, res) => {
     });
 });
 
+//Create a custom Middleware function
+const checkUserType = (req, res, next) => {
+    const userType = req.originalUrl.split('/')[2];
+    //Bring in the passport authentication strategy
+    require('./config/passport')(userType, passport);
+    next();
+}
+
+app.use(checkUserType);
+
 //Bringing in the user routes
 const users = require('./routes/users');
 app.use('/api/users', users);
+
+const admin = require('./routes/admin');
+app.use('/api/admin', admin);
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
