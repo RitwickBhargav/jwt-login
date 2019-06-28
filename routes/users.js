@@ -15,8 +15,6 @@ router.post('/register', (req, res) => {
     });
     User.addUser(newUser, (err, user) => {
         if (err) {
-            //debugger
-            //console.log(err)
             let message = "";
             let message1 = "";
             let message2 = "";
@@ -42,7 +40,6 @@ router.post('/register', (req, res) => {
                 success: false,
                 message: "Phone No. is wrong"
             });
-        debugger
         if (req.body.password.length < 8)
             return res.json({
                 success: false,
@@ -70,7 +67,6 @@ router.post('/login', (req, res) => {
         User.comparePassword(password, user.password, (err, isMatch) => {
             if (err) throw err;
             if (isMatch) {
-                debugger
                 const token = jwt.sign({
                     type: "user",
                     data: {
