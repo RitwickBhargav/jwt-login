@@ -15,10 +15,7 @@ router.post('/register', (req, res) => {
         job_profile: req.body.job_profile
     });
     Admin.addAdmin(newAdmin, (err, admin) => {
-        debugger
         if (err) {
-            //debugger
-            //console.log(err)
             let message = "";
             let message1 = "";
             let message2 = "";
@@ -26,8 +23,6 @@ router.post('/register', (req, res) => {
                 if (err.errors.name.kind == "required" || err.errors.username.kind == "required" || err.errors.email.kind == "required" || err.errors.password.kind == "required" || err.errors.contact.kind == "required") message = "All entries are Mandatory. ";
             if (err.errors.username != undefined)
                 if (err.errors.username.kind == "unique") message1 = "Username is already taken. ";
-            if (err.errors.email != undefined)
-                if (err.errors.email.kind == "unique") message2 = "Email already exists. ";
             if (err.errors.email != undefined)
                 if (err.errors.email.kind == "unique") message2 = "Email already exists. ";
             //return res.json(err);
