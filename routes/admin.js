@@ -6,7 +6,6 @@ const Admin = require('../models/Admin');
 const config = require('../config/database');
 
 router.post('/register', (req, res) => {
-    debugger
     let newAdmin = new Admin({
         name: req.body.name,
         username: req.body.username,
@@ -45,7 +44,6 @@ router.post('/register', (req, res) => {
                 success: false,
                 message: "Phone No. is Wrong"
             });
-        debugger
         if (req.body.password.length < 8)
             return res.json({
                 success: false,
@@ -73,7 +71,6 @@ router.post('/login', (req, res) => {
         Admin.comparePassword(password, admin.password, (err, isMatch) => {
             if (err) throw err;
             if (isMatch) {
-                debugger
                 const token = jwt.sign({
                     type: "admin",
                     data: {
