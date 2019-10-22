@@ -14,6 +14,7 @@ router.post('/register', (req, res) => {
         password: req.body.password,
         job_profile: req.body.job_profile
     });
+    //here is how to add admins
     Admin.addAdmin(newAdmin, (err, admin) => {
         if (err) {
             let message = "";
@@ -34,11 +35,13 @@ router.post('/register', (req, res) => {
                 email: message2
             });
         }
+        //contact number is not correct
         if (newAdmin.contact.length != 10)
             return res.json({
                 success: false,
                 message: "Phone No. is Wrong"
             });
+        //password is not strong enough
         if (req.body.password.length < 8)
             return res.json({
                 success: false,
@@ -57,6 +60,8 @@ router.post('/login', (req, res) => {
     const password = req.body.password;
     Admin.getAdminByUsername(username, (err, admin) => {
         if (err) throw err;
+        //if admin is not found
+
         if (!admin) {
             return res.json({
                 success: false,
@@ -65,6 +70,7 @@ router.post('/login', (req, res) => {
         }
         Admin.comparePassword(password, admin.password, (err, isMatch) => {
             if (err) throw err;
+            //if the password matches the original paasword
             if (isMatch) {
                 const token = jwt.sign({
                     type: "admin",

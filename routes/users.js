@@ -50,7 +50,7 @@ router.post('/register', (req, res) => {
 
     });
 });
-
+//validation required for login the user into their account
 router.post('/login', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
