@@ -46,7 +46,7 @@ router.post('/register', (req, res) => {
             });
         return res.json({
             success: true,
-            message: "Admin registration is Successful."
+            message: "Successful."
         });
 
     });

@@ -37,12 +37,10 @@ AdminSchema.plugin(uniqueValidator);
 
 const Admin = module.exports = mongoose.model('Admin', AdminSchema);
 
-//Find by Id
 module.exports.getAdminById = function (id, callback) {
     Admin.findById(id, callback);
 }
 
-//Find the Admin by its username
 module.exports.getAdminByUsername = function (username, callback) {
     const query = {
         username: username
