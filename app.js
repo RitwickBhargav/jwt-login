@@ -61,6 +61,12 @@ app.use('/api/users', users);
 const admin = require('./routes/admin');
 app.use('/api/admin', admin);
 
+app.get('*', (req, res) => {
+    return res.json({
+        message: "I think you are lost!"
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 })
