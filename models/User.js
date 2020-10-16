@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const uniqueValidator = require('mongoose-unique-validator');
 
-//User Schema
+//User Schema -- Imp credentials for user
 const UserSchema = mongoose.Schema({
     name: {
         type: String,
@@ -25,6 +25,7 @@ const UserSchema = mongoose.Schema({
     },
     contact: {
         type: String,
+        unique: true,
         required: true
     }
 });

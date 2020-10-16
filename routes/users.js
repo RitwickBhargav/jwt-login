@@ -21,9 +21,7 @@ router.post('/register', (req, res) => {
             if (err.errors.name != undefined)
                 if (err.errors.name.kind == "required" || err.errors.username.kind == "required" || err.errors.email.kind == "required" || err.errors.password.kind == "required" || err.errors.contact.kind == "required") message = "All entries are Mandatory. ";
             if (err.errors.username != undefined)
-                if (err.errors.username.kind == "unique") message1 = "Username is already taken. ";
-            if (err.errors.email != undefined)
-                if (err.errors.email.kind == "unique") message2 = "Email already exists. ";
+                if (err.errors.username.kind == "unique") message1 = "User already exists. ";
             if (err.errors.email != undefined)
                 if (err.errors.email.kind == "unique") message2 = "Email already exists. ";
             //return res.json(err);
@@ -52,7 +50,7 @@ router.post('/register', (req, res) => {
 
     });
 });
-
+//validation required for login the user into their account
 router.post('/login', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
